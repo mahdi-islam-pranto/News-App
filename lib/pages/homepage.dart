@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
                   Tab(text: "All News"),
                 ],
               )),
-          body: const TabBarView(children: [
+          body: TabBarView(children: [
             BreakingNews(),
             AllNews(),
           ]),

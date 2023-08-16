@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/news_api.dart';
+import '../components/news_item_list.dart';
+import '../services/api_services.dart'; // Import API service
 
 class BreakingNews extends StatefulWidget {
   const BreakingNews({super.key});
@@ -8,29 +11,28 @@ class BreakingNews extends StatefulWidget {
 }
 
 class _BreakingNewsState extends State<BreakingNews> {
-  List<BreakingNews> breakingNews = [];
+  //creating an object
+  ApiService apiService = ApiService();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return Container(
-                child: Column(
-                  children: [Text("data ${breakingNews[index]}")],
-                ),
-              );
-            },
-            itemCount: breakingNews.length,
-          );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
+    return Scaffold(
+      body: FutureBuilder(
+        future: apiService
+            .getBreakingNews(), //calling the api using apiService object
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<NewsModel> articleList = snapshot.data ??
+                []; //creating a list variable to store all data
+            return ListView.builder(
+              itemCount: articleList.length,
+              itemBuilder: (context, index) {
+                return NewsItemList();
+              },
+            );
+          }
+        },
+      ),
     );
   }
 }

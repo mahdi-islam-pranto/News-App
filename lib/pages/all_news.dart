@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class AllNews extends StatelessWidget {
   const AllNews({super.key});
@@ -6,7 +7,17 @@ class AllNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("Helooo"),
+      child: FloatingActionButton(
+        onPressed: () async {
+          const allNews =
+              "https://newsapi.org/v2/everything?q=bitcoin&apiKey=28c791f536f0432aa0e6327dbbd97699";
+          const breakingNews =
+              "https://newsapi.org/v2/top-headlines?country=us&apiKey=28c791f536f0432aa0e6327dbbd97699";
+
+          final response = await http.get(Uri.parse(allNews));
+          print(response.body);
+        },
+      ),
     );
   }
 }

@@ -17,22 +17,21 @@ class _BreakingNewsState extends State<BreakingNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: apiService
-            .getBreakingNews(), //calling the api using apiService object
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<NewsModel> articleList = snapshot.data ??
-                []; //creating a list variable to store all data
-            return ListView.builder(
-              itemCount: articleList.length,
-              itemBuilder: (context, index) {
-                return NewsItemList();
-              },
-            );
-          }
-        },
-      ),
-    );
+        // body: FutureBuilder(
+        //     future: apiService
+        //         .getBreakingNews(), //calling the api using apiService object
+        //     builder: (context, snapshot) {
+        //       if (snapshot.hasData) {
+        //         List<NewsModel> articleList = snapshot.data ??
+        //             []; //creating a list variable to store all data
+        //         return ListView.builder(
+        //           itemCount: articleList.length,
+        //           itemBuilder: (context, index) {
+        //             return Text("API accessed");
+        //           },
+        //         );
+        //       }
+        //     })
+        );
   }
 }

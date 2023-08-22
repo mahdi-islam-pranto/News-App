@@ -47,7 +47,7 @@ class NewsModel {
 }
 
 class Source {
-  Null? id;
+  Null id;
   String? name;
 
   Source({this.id, this.name});

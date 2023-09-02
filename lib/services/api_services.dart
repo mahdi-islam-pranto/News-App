@@ -20,9 +20,11 @@ class ApiService {
         Map<String, dynamic> json = jsonDecode(response.body);
         // catching only articles data from the json
         List<dynamic> body = json['articles'];
+        // print(body);
         // matching the article data with the NewsModel model
         List<NewsModel> articleList =
             body.map((item) => NewsModel.fromJson(item)).toList();
+
         return articleList; //return articleList as a list
       } else {
         throw ("No News Found");

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import '../models/news_api.dart';
 
 class ApiService {
+  final String apiKey = '28c791f536f0432aa0e6327dbbd97699';
   final allNews =
       "https://newsapi.org/v2/everything?q=bitcoin&apiKey=28c791f536f0432aa0e6327dbbd97699";
   final breakingNews =

@@ -15,7 +15,7 @@ class ApiService {
     try {
       // calling the api and store the data to response
       final response = await http.get(Uri.parse(allNews));
-
+      print(response.body);
       if (response.statusCode == 200) {
         //if data is found, then json decode the response
         Map<String, dynamic> json = jsonDecode(response.body);

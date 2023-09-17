@@ -1,29 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news_api.dart';
-import '../components/news_item_list.dart';
-import '../services/api_services.dart'; // Import API service
 
-class BreakingNews extends StatefulWidget {
-  const BreakingNews({super.key});
+import '../services/api_services.dart';
 
-  @override
-  State<BreakingNews> createState() => _BreakingNewsState();
+void main() {
+  runApp(MyApp());
 }
 
-class _BreakingNewsState extends State<BreakingNews> {
-  //creating an object
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: BreakingNews(),
+    );
+  }
+}
 
-  final brekingNewsList = ApiService().getBreakingNews();
+class BreakingNews extends StatelessWidget {
+  final ApiService apiService = ApiService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("All Hot News")),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(brekingNewsList.toString()),
-          );
+      appBar: AppBar(
+        title: Text('Top News Today'),
+      ),
+      body: FutureBuilder<List<NewsModel>>(
+        future: apiService.getBreakingNews(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No news available.'));
+          } else {
+            final newsList = snapshot.data!;
+            return ListView.builder(
+              itemCount: newsList.length,
+              itemBuilder: (context, index) {
+                final newsItem = newsList[index];
+                return ListTile(
+                  title: Text(newsItem.title),
+                  subtitle: Text(newsItem.description),
+                );
+              },
+            );
+          }
         },
       ),
     );

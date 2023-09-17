@@ -1,71 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/models/news_api.dart'; // Import your NewsModel
-import 'package:news_app/services/api_services.dart';
+import 'package:news_app/models/news_api.dart';
 
-class AllNews extends StatefulWidget {
-  const AllNews({Key? key});
+import '../services/api_services.dart';
 
-  @override
-  _AllNewsState createState() => _AllNewsState();
+void main() {
+  runApp(MyApp());
 }
 
-class _AllNewsState extends State<AllNews> {
-  List<NewsModel> _newsList = []; // Store the news articles here
-  bool _isLoading = false;
-
+class MyApp extends StatelessWidget {
   @override
-  void initState() {
-    super.initState();
-    _fetchNews(); // Call the function to fetch news when the widget is initialized
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: AllNews(),
+    );
   }
+}
 
-  Future<void> _fetchNews() async {
-    setState(() {
-      _isLoading = true; // Set loading state
-    });
-
-    try {
-      final apiService = ApiService();
-      final newsList = await apiService.getAllNews();
-
-      setState(() {
-        _newsList = newsList; // Update the news list
-        _isLoading = false; // Turn off loading state
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false; // Turn off loading state
-      });
-      print("Error: $e");
-    }
-  }
+class AllNews extends StatelessWidget {
+  final ApiService apiService = ApiService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('All News'),
-        ),
-        body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator()) // Show loading indicator
-            : _newsList.isEmpty
-                ? Center(
-                    child: Text(
-                        'No news found.')) // Show message when no news is available
-                : ListView.builder(
-                    itemCount: _newsList.length,
-                    itemBuilder: (context, index) {
-                      final newsItem = _newsList[index];
-                      return ListTile(
-                        title: Text(newsItem.title ?? 'No Title'),
-                        subtitle:
-                            Text(newsItem.description ?? 'No Description'),
-                        onTap: () {
-                          // Handle tapping on a news item if needed
-                        },
-                      );
-                    },
-                  ));
+      appBar: AppBar(
+        title: Text('All Recent News'),
+      ),
+      body: FutureBuilder<List<NewsModel>>(
+        future: apiService.getAllNews(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No news available.'));
+          } else {
+            final newsList = snapshot.data!;
+            return ListView.builder(
+              itemCount: newsList.length,
+              itemBuilder: (context, index) {
+                final newsItem = newsList[index];
+                return ListTile(
+                  title: Text(newsItem.title),
+                  subtitle: Text(newsItem.description),
+                );
+              },
+            );
+          }
+        },
+      ),
+    );
   }
 }

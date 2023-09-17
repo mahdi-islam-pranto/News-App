@@ -43,6 +43,7 @@ class BreakingNews extends StatelessWidget {
                 return ListTile(
                   title: Text(newsItem.title),
                   subtitle: Text(newsItem.description),
+                  trailing: Text(newsItem.author),
                 );
               },
             );

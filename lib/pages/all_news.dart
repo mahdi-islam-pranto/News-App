@@ -44,11 +44,21 @@ class AllNews extends StatelessWidget {
                 return Container(
                   child: Column(
                     children: [
-                      CachedNetworkImage(
-                        imageUrl: newsItem.urlToImage,
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      Row(
+                        children: [
+                          Card(
+                            color: Colors.green[50],
+                            child: CachedNetworkImage(
+                              width: 200,
+                              imageUrl: newsItem.urlToImage,
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                          ),
+                          Text(newsItem.author),
+                        ],
                       ),
                     ],
                   ),

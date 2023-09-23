@@ -1,12 +1,12 @@
 class NewsModel {
   final String title;
   final String description;
-  // final Map source;
+  final Map source;
   final String author;
 
   final String url;
   final String urlToImage;
-  // final DateTime publishedAt;
+  final String publishedAt;
   final String content;
 
   NewsModel(
@@ -14,8 +14,8 @@ class NewsModel {
       required this.description,
       required this.author,
       required this.content,
-      // required this.publishedAt,
-      // required this.source,
+      required this.publishedAt,
+      required this.source,
       required this.url,
       required this.urlToImage});
 
@@ -25,8 +25,8 @@ class NewsModel {
       description: json['description'] ?? '',
       author: json['author'] ?? '',
       content: json['content'] ?? '',
-      // publishedAt: json['publishedAt'] ?? '',
-      // source: json['source'] ?? '',
+      publishedAt: json['publishedAt'] ?? '',
+      source: json['source'] ?? '',
       url: json['url'] ?? '',
       urlToImage: json['urlToImage'] ?? '',
     );

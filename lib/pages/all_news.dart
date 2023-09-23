@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news_api.dart';
 
@@ -40,13 +41,17 @@ class AllNews extends StatelessWidget {
               itemCount: newsList.length,
               itemBuilder: (context, index) {
                 final newsItem = newsList[index];
-                return ListTile(
-                  title: Text(newsItem.title),
-                  subtitle: Text(newsItem.description),
-                  trailing: Text(newsItem.author),
-                  leading: CircleAvatar(
-                      backgroundColor: const Color(0xff764abc),
-                      child: Text("No.")),
+                return Container(
+                  child: Column(
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: newsItem.urlToImage,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ],
+                  ),
                 );
               },
             );

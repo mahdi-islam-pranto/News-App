@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-              title: Center(child: const Text("Global News App")),
+              title: const Center(child: Text("Global News App")),
               backgroundColor: Colors.teal,
               bottom: const TabBar(
                 automaticIndicatorColorAdjustment: true,

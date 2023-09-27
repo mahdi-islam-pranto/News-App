@@ -49,7 +49,7 @@ class AllNews extends StatelessWidget {
                           Card(
                             color: Colors.green[50],
                             child: CachedNetworkImage(
-                              width: 200,
+                              width: 150,
                               imageUrl: newsItem.urlToImage,
                               placeholder: (context, url) =>
                                   CircularProgressIndicator(),
@@ -58,7 +58,8 @@ class AllNews extends StatelessWidget {
                             ),
                           ),
                           Text(newsItem.author),
-                          Text(newsItem.title)
+                          Text(newsItem.title),
+                          Text(newsItem.url)
                         ],
                       ),
                     ],

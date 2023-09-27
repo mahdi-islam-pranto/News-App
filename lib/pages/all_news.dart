@@ -58,6 +58,7 @@ class AllNews extends StatelessWidget {
                             ),
                           ),
                           Text(newsItem.author),
+                          Text(newsItem.title)
                         ],
                       ),
                     ],

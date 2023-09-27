@@ -57,9 +57,13 @@ class AllNews extends StatelessWidget {
                                   Icon(Icons.error),
                             ),
                           ),
-                          Text(newsItem.author),
-                          Text(newsItem.title),
-                          Text(newsItem.url)
+                          Column(
+                            children: [
+                              Text(newsItem.author),
+                              Text(newsItem.title),
+                              Text(newsItem.url)
+                            ],
+                          ),
                         ],
                       ),
                     ],

@@ -34,7 +34,7 @@ class AllNews extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No news available.'));
+            return Center(child: Text('No news available at the moment.'));
           } else {
             final newsList = snapshot.data!;
             return ListView.builder(

@@ -41,26 +41,76 @@ class AllNews extends StatelessWidget {
               itemCount: newsList.length,
               itemBuilder: (context, index) {
                 final newsItem = newsList[index];
-                return Container(
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  margin: EdgeInsets.fromLTRB(16, 0, 16, 16),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Column(
-                        children: [
-                          Card(
-                            color: Colors.green[50],
-                            child: CachedNetworkImage(
-                              width: 300,
-                              imageUrl: newsItem.urlToImage,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
-                          ),
-                          Text(newsItem.author),
-                          Text(newsItem.title),
-                          Text(newsItem.url)
-                        ],
+                      ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
+                        child: Image(
+                          image: NetworkImage(newsItem.urlToImage),
+                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.fill,
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            return Card(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: const SizedBox(
+                                height: 200,
+                                width: double.infinity,
+                                child: Icon(Icons.broken_image_outlined),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Text(
+                          newsItem.title,
+                          maxLines: 2,
+                          style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Text(
+                          newsItem.description,
+                          maxLines: 2,
+                          style: const TextStyle(
+                              color: Colors.black54, fontSize: 14),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Text(
+                          " - ${newsItem.author}",
+                          maxLines: 1,
+                          style: const TextStyle(
+                              color: Colors.black54, fontSize: 14),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Text(
+                          " - ${newsItem.url}",
+                          maxLines: 1,
+                          style: const TextStyle(
+                              color: Colors.black54, fontSize: 14),
+                        ),
                       ),
                     ],
                   ),

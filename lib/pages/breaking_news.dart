@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/models/news_api.dart';
 
 import '../services/api_services.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
 
 class BreakingNews extends StatelessWidget {
   final ApiService apiService = ApiService();
+  late final WebViewController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +99,15 @@ class BreakingNews extends StatelessWidget {
                         padding: const EdgeInsets.all(6),
                         child: Text(
                           " - ${newsItem.author}",
+                          maxLines: 1,
+                          style: const TextStyle(
+                              color: Colors.black54, fontSize: 14),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Text(
+                          " - ${newsItem.url}",
                           maxLines: 1,
                           style: const TextStyle(
                               color: Colors.black54, fontSize: 14),
